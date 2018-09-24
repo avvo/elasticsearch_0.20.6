@@ -1,4 +1,4 @@
-## #######################################################################
+## ############################################################################
 ## Creates a Docker image running Ubuntu and Elasticsearch 0.26.0
 ## ##########
 ##
@@ -6,30 +6,14 @@
 ## Elasticsearch v 0.26.0 running locally involves reverting to 
 ## an earlier version of Java which may cause issues with other tools.
 ##
-## #######################################################################
+## ############################################################################
 
-FROM ubuntu:18.04
+FROM openjdk:8-jre-slim
 
-RUN apt-get update
+RUN apt-get update && \
+    apt-get install -y wget 
 
-RUN apt-get install -y software-properties-common
-
-RUN add-apt-repository ppa:webupd8team/java
-
-RUN apt-get update
-
-## Accepts the Oracle license
-
-RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
-
-RUN apt-get install -y oracle-java8-installer
-
-## Clean Up
-
-RUN rm -rf /var/lib/apt/lists/* && \
-    rm -rf /var/cache/oracle-jdk8-installer
-
-## ####################################################################
+## ############################################################################
 ## Get and install Elasticsearch 0.20.6
 
 RUN cd /tmp && \
@@ -37,5 +21,13 @@ RUN cd /tmp && \
     dpkg -i elasticsearch-0.20.6.deb && \
     rm elasticsearch-0.20.6.deb
 
+## ############################################################################
+## Clean Up
+
+RUN apt-get remove -y --purge wget && \
+    apt-get autoremove -y
+
+## ############################################################################
+## Run Forrest Run!
 CMD /usr/share/elasticsearch/bin/elasticsearch -f
 
