@@ -19,11 +19,11 @@ It is understood at this time that the resulting Docker image will be used on de
 
 1. Build the Docker image:
 
-`cd elasticsearch_0.20.6 && ./build`
+`cd elasticsearch_0.20.6 && ./build.sh`
 
 1. Start a container using the image:
 
-`docker run -p 9200:9200 -t -i elasticsearch_0.20.6`
+`./run.sh`
 
 
 You should now be able to run the onni-full/dashboard and onni-full/onni tests (`bundle exec rake`)
