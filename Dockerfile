@@ -34,7 +34,8 @@ RUN rm -rf /var/lib/apt/lists/* && \
 
 RUN cd /tmp && \
     wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-0.20.6.deb && \
-    dpkg -i elasticsearch-0.20.6.deb 
+    dpkg -i elasticsearch-0.20.6.deb && \
+    rm elasticsearch-0.20.6.deb
 
 CMD /usr/share/elasticsearch/bin/elasticsearch -f
 
